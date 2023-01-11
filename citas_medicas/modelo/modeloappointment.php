@@ -10,7 +10,6 @@ class Modelo{
   }
   public function mostrar($tabla,$condicion){
       $consulta="SELECT appointment.codcit, appointment.asunto, appointment.color,customers.codpaci, customers.dnipa, customers.nombrep, customers.apellidop, doctor.coddoc, doctor.dnidoc, doctor.apedoc,doctor.nomdoc, specialty.codespe, specialty.nombrees, appointment.start, appointment.end, appointment.estado, appointment.fecha_create FROM appointment INNER JOIN customers ON appointment.codpaci = customers.codpaci INNER JOIN doctor ON appointment.coddoc = doctor.coddoc INNER JOIN specialty ON appointment.codespe = specialty.codespe WHERE appointment.estado='1'";
-
       $resultado=$this->db->query($consulta);
       while ($tabla=$resultado->fetchAll(PDO::FETCH_ASSOC)) {
           $this->appointment[]=$tabla;

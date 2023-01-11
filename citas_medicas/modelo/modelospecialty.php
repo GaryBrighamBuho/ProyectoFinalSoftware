@@ -24,29 +24,9 @@ class Modelo{
       $this->db->prepare($query)->execute(array($data->nombrees));
 
     }catch (Exception $e) {
-
       die($e->getMessage());
     }
     }
-	
-  public function actualizar($tabla,$data,$condicion){
-      $consulta="UPDATE $tabla SET $data WHERE $condicion";
-      $resultado=$this->db->query($consulta);
-      if($resultado){
-          return true;
-      }else{
-          return false;
-      }
-  }
-  public function eliminar($tabla,$condicion){
-      $consulta="DELETE FROM $tabla WHERE $condicion";
-      $resultado=$this->db->query($consulta);
-      if($resultado){
-          return true;
-      }else{
-          return false;
-      }
-  }
 }
 
  ?>
