@@ -1,0 +1,9 @@
+Buenos dias, tarde y noches les saluda Un programador mas 
+El sistema es acerca de citas medicas donde encontraras 
+el modulo de citas, pacientes, areas medicas, medicos y horarios
+asu vez cuenta con reportes 
+La base se llama proyecto_final 
+EL USUARIO: rubycasi31
+Y CONTRASEÑA: 11111 DEL ADMINISTRADOR 
+LIKE Y SUSCRIBETE
+	 	
