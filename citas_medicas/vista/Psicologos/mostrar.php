@@ -1,15 +1,14 @@
 <?php
-$opcion = "2";
+$opcion = "3";
 $_GET["opcion"] = $opcion;
 require '../vista/template/header.php';
 ?>
-       
        <main class="h-full overflow-y-auto">
           <div class="container px-6 mx-auto grid">
             <h2
               class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
             >
-              Patients
+              Doctor
             </h2>
             <!-- CTA -->
             <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple" style="cursor: pointer;">
@@ -28,13 +27,14 @@ require '../vista/template/header.php';
              
             </a>
             <div>
-                <button onclick="window.location.href='../vista/patients/new.php'" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                  New patients
+                <button onclick="window.location.href='../vista/doctor/new.php'" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                  New doctor
                 </button>
 
-                <button onclick="window.location.href='../vista/patients/reporte.php'" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                <button onclick="window.location.href='../vista/doctor/reporte.php'" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                   PDF
                 </button>
+
               </div>
 
 
@@ -44,12 +44,14 @@ require '../vista/template/header.php';
                     <tr
                       class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                     >
-                      <th class="px-4 py-3">Patients</th>
-                      <th class="px-4 py-3">Seguro</th>
+                      <th class="px-4 py-3">Doctor</th>
+                      <th class="px-4 py-3">Especialidad</th>
                       <th class="px-4 py-3">Telefono</th>
-                      <th class="px-4 py-3">Sexo</th>
+                      <th class="px-4 py-3">Nacionalidad</th>
                       <th class="px-4 py-3">Correo</th>
-                      
+                    
+                      <th class="px-4 py-3">Estado</th>
+                     
                       <th class="px-4 py-3">Acciones</th>
                     </tr>
                   </thead>
@@ -71,34 +73,49 @@ require '../vista/template/header.php';
                             ></div>
                           </div>
                           <div>
-                            <p class="font-semibold"><?php echo $va['nombrep'];?> <?php echo $va['apellidop'];?></p>
-                            <p class="text-xs text-gray-600 dark:text-gray-400">
-                             <?php echo $va['dnipa'];?>
+                            <p class="font-semibold"><?php echo $va['nomdoc'];?> <?php echo $va['apedoc'];?></p>
+                           <p class="text-xs text-gray-600 dark:text-gray-400">
+                             <?php echo $va['dnidoc'];?>
                             </p>
                           </div>
                         </div>
                       </td>
                       <td class="px-4 py-3 text-sm">
-                         <?php echo $va['seguro'];?>
-                      </td>
-
-                      <td class="px-4 py-3 text-sm">
-                         <?php echo $va['tele'];?>
-                      </td>
-
-                       <td class="px-4 py-3 text-sm">
-                         <?php echo $va['sexo'];?>
+                         <?php echo $va['nombrees'];?>
                       </td>
                       <td class="px-4 py-3 text-sm">
-                         <?php echo $va['email'];?>
+                         <?php echo $va['telefo'];?>
                       </td>
-
+                      <td class="px-4 py-3 text-sm">
+                         <?php echo $va['naciona'];?>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                         <?php echo $va['correo'];?>
+                      </td>
                      
+
+                      <td class="px-4 py-3 text-xs">
+                <?php    
+
+                if($va['estado']==1)  { ?> 
+                <form  method="get" action="javascript:activo('<?php echo $va['coddoc']; ?>')">
+                    <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">Enable
+                        </span>
+                </form>
+                <?php  }   else {?> 
+
+                    <form  method="get" action="javascript:inactivo('<?php echo $va['coddoc']; ?>')"> 
+                       <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-orange-100 rounded-full dark:text-white dark:bg-orange-600">
+                          Disable
+                        </span>
+                     </form>
+                        <?php  } ?>                         
+            </td>
 
             <td class="px-4 py-3">
                         <div class="flex items-center space-x-4 text-sm">
                          
-                          <a href="../vista/patients/edit.php?id=<?php echo $va["codpaci"]; ?>" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                          <a href="../vista/doctor/edit.php?id=<?php echo $va["coddoc"]; ?>" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                             aria-label="Edit">
                             <svg
                               class="w-5 h-5"
@@ -112,8 +129,7 @@ require '../vista/template/header.php';
                             </svg>
                           </a>
 
-
-                          <a href="../vista/patients/desactivar.php?id=<?php echo $va["codpaci"]; ?>"  class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray barra"
+                          <a href="../vista/doctor/desactivar.php?id=<?php echo $va["coddoc"]; ?>"  class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray barra"
                             aria-label="Edit">
                            <svg
                               class="w-5 h-5"
@@ -126,18 +142,6 @@ require '../vista/template/header.php';
                                 d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
                                 clip-rule="evenodd"
                               ></path>
-                            </svg>
-                          </a>
-
-                          <a href="../vista/patients/password.php?id=<?php echo $va["codpaci"]; ?>" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                            aria-label="Password">
-                            <svg
-                              class="w-5 h-5"
-                              aria-hidden="true"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                            >
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
                             </svg>
                           </a>
 
@@ -156,7 +160,7 @@ require '../vista/template/header.php';
            
           </div>
 <!--------------------------------COMIENZA NEW MODAL----------------------------->
-           
+
    
         
 <?php require '../vista/template/footer.php';  ?>

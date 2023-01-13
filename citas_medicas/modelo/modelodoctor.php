@@ -1,52 +1,68 @@
 <?php
-class Modelo{
+class Modelo
+{
+    private $doctor;
+    private $db;
 
-  private $doctor;
-  private $db;
-
-  public function __construct(){
-      $this->doctor=array();
-      $this->db=new PDO('mysql:host=localhost;dbname=proyecto_final',"root","");
-  }
-  public function mostrar($tabla,$condicion){
-      $consulta="SELECT doctor.coddoc, doctor.dnidoc, doctor.nomdoc, doctor.apedoc, specialty.codespe, specialty.nombrees,doctor.sexo, doctor.telefo, doctor.fechanaci, doctor.correo, doctor.naciona, doctor.estado, doctor.fecha_create FROM doctor INNER JOIN specialty ON doctor.codespe = specialty.codespe WHERE doctor.estado='1'";
-
-      $resultado=$this->db->query($consulta);
-      while ($tabla=$resultado->fetchAll(PDO::FETCH_ASSOC)) {
-          $this->doctor[]=$tabla;
-      }
-      return $this->doctor;
+    // constructor
+    public function __construct()
+    {
+        // arreglo de doctores
+        $this->doctor = array();
+        // conexion a la base de datos
+        $this->db = new PDO('mysql:host=localhost;dbname=proyecto_final', "root", "");
     }
-    public function  insertar(Modelo $data){
-    try {
-    $query="INSERT INTO doctor (dnidoc, nomdoc,apedoc)VALUES(?,?,?)";
 
-      $this->db->prepare($query)->execute(array($data->dnidoc, $data->nomdoc, $data->apedoc));
+    // recupera los doctores activos de la base de datos con su especialidad
+    public function mostrar($tabla, $condicion)
+    {
+        // mostramos doctores por su especialidad
+        $consulta = "SELECT coddoc, dnidoc, nomdoc, apedoc,sexo, telefo, fechanaci, correo, naciona, estado, fecha_create FROM doctor WHERE estado='1'";
 
-    }catch (Exception $e) {
+        // realizamos la consulta
+        $resultado = $this->db->query($consulta);
 
-      die($e->getMessage());
+        // agregamos los datos de doctores al arreglo
+        while ($tabla = $resultado->fetchAll(PDO::FETCH_ASSOC)) {
+            $this->doctor[] = $tabla;
+        }
+        // retornamos
+        return $this->doctor;
     }
+
+    // Insertamos nuevos datos de doctor a la base de datos
+    public function  insertar(Modelo $data)
+    {
+        try {
+            $query = "INSERT INTO doctor (dnidoc, nomdoc,apedoc)VALUES(?,?,?)";
+
+            $this->db->prepare($query)->execute(array($data->dnidoc, $data->nomdoc, $data->apedoc));
+        } catch (Exception $e) {
+
+            die($e->getMessage());
+        }
     }
-	
-  public function actualizar($tabla,$data,$condicion){
-      $consulta="UPDATE $tabla SET $data WHERE $condicion";
-      $resultado=$this->db->query($consulta);
-      if($resultado){
-          return true;
-      }else{
-          return false;
-      }
-  }
-  public function eliminar($tabla,$condicion){
-      $consulta="DELETE FROM $tabla WHERE $condicion";
-      $resultado=$this->db->query($consulta);
-      if($resultado){
-          return true;
-      }else{
-          return false;
-      }
-  }
+
+    // funcion para actualizar la base de datos en la tabla, con la nueva data segun la condicion dada
+    public function actualizar($tabla, $data, $condicion)
+    {
+        $consulta = "UPDATE $tabla SET $data WHERE $condicion";
+        $resultado = $this->db->query($consulta);
+        // retornamos true si salio bien la ejecucion sino retornamos falso
+        if ($resultado) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function eliminar($tabla, $condicion)
+    {
+        $consulta = "DELETE FROM $tabla WHERE $condicion";
+        $resultado = $this->db->query($consulta);
+        if ($resultado) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
-
- ?>

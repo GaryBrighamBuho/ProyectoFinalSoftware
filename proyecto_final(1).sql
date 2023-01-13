@@ -22,17 +22,16 @@
 --
 -- Estructura de tabla para la tabla `appointment`
 --
-CREATE DATABASE `proyecto_final`;
-
+drop database proyecto_final;
+CREATE database proyecto_final;
+use proyecto_final;
 
 CREATE TABLE `appointment` (
   `codcit` int(11) NOT NULL,
   `asunto` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `color` char(8) COLLATE utf8_unicode_ci NOT NULL,
   `codpaci` int(11) NOT NULL,
   `coddoc` int(11) NOT NULL,
   `idhora` int(11) NOT NULL,
-  `codespe` int(11) NOT NULL,
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
   `estado` char(1) COLLATE utf8_unicode_ci NOT NULL,
@@ -43,10 +42,10 @@ CREATE TABLE `appointment` (
 -- Volcado de datos para la tabla `appointment`
 --
 
-INSERT INTO `appointment` (`codcit`, `asunto`, `color`, `codpaci`, `coddoc`, `idhora`, `codespe`, `start`, `end`, `estado`, `fecha_create`) VALUES
-(1, 'evento', '#40E0D0', 1, 1, 1, 1, '2021-11-29 19:30:00', '2021-11-29 19:30:00', '1', '2021-11-26 23:14:18'),
-(2, 'esto es un ejemplo de asunto', '#40E0D0', 1, 1, 1, 1, '2021-12-20 19:30:00', '2021-12-20 19:30:00', '1', '2021-11-27 00:40:54'),
-(3, 'asunto de emergencias', '#40E0D0', 3, 3, 3, 5, '2021-12-01 19:30:00', '2021-12-01 19:30:00', '1', '2021-11-27 00:54:44');
+INSERT INTO `appointment` (`codcit`, `asunto`, `codpaci`, `coddoc`, `start`, `end`, `estado`, `fecha_create`) VALUES
+(1, 'evento', 1, 1, '2021-11-29 19:30:00', '2021-11-29 19:30:00', '1', '2021-11-26 23:14:18'),
+(2, 'esto es un ejemplo de asunto', 1, 1,  '2021-12-20 19:30:00', '2021-12-20 19:30:00', '1', '2021-11-27 00:40:54'),
+(3, 'asunto de emergencias', 3, 3, '2021-12-01 19:30:00', '2021-12-01 19:30:00', '1', '2021-11-27 00:54:44');
 
 -- --------------------------------------------------------
 
@@ -90,7 +89,6 @@ CREATE TABLE `doctor` (
   `dnidoc` char(8) COLLATE utf8_unicode_ci NOT NULL,
   `nomdoc` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `apedoc` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `codespe` int(11) NOT NULL,
   `sexo` char(15) COLLATE utf8_unicode_ci NOT NULL,
   `telefo` char(9) COLLATE utf8_unicode_ci NOT NULL,
   `fechanaci` date NOT NULL,
@@ -104,35 +102,13 @@ CREATE TABLE `doctor` (
 -- Volcado de datos para la tabla `doctor`
 --
 
-INSERT INTO `doctor` (`coddoc`, `dnidoc`, `nomdoc`, `apedoc`, `codespe`, `sexo`, `telefo`, `fechanaci`, `correo`, `naciona`, `estado`, `fecha_create`) VALUES
-(1, '77888686', 'Luis', 'Trelles ', 1, 'Masculino', '988686868', '1982-11-16', 'luistrelles@gmail.com', 'Venezolana', '1', '2021-11-25 14:38:25'),
-(2, '77656565', 'Flavia', 'Pineda Flores', 3, 'Femenino', '978787878', '1989-11-14', 'flavviapineda@gmail.com', 'Venezonlana', '1', '2021-11-13 21:41:31'),
-(3, '75343434', 'Ivan ', 'Solis', 5, 'Masculino', '900669696', '1997-11-11', 'ivansolis@gmail.com', 'Peruana', '1', '2021-11-27 00:46:06');
+INSERT INTO `doctor` (`coddoc`, `dnidoc`, `nomdoc`, `apedoc`, `sexo`, `telefo`, `fechanaci`, `correo`, `naciona`, `estado`, `fecha_create`) VALUES
+(1, '77888686', 'Luis', 'Trelles ', 'Masculino', '988686868', '1982-11-16', 'luistrelles@gmail.com', 'Venezolana', '1', '2021-11-25 14:38:25'),
+(2, '77656565', 'Flavia', 'Pineda Flores', 'Femenino', '978787878', '1989-11-14', 'flavviapineda@gmail.com', 'Venezonlana', '1', '2021-11-13 21:41:31'),
+(3, '75343434', 'Ivan ', 'Solis', 'Masculino', '900669696', '1997-11-11', 'ivansolis@gmail.com', 'Peruana', '1', '2021-11-27 00:46:06');
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `horario`
---
-
-CREATE TABLE `horario` (
-  `idhora` int(11) NOT NULL,
-  `nomhora` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  `coddoc` int(11) NOT NULL,
-  `estado` char(1) COLLATE utf8_unicode_ci NOT NULL,
-  `fere` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `horario`
---
-
-INSERT INTO `horario` (`idhora`, `nomhora`, `coddoc`, `estado`, `fere`) VALUES
-(1, 'Solo lunes', 1, '1', '2021-11-13 21:31:00'),
-(2, 'Solos martes', 2, '1', '2021-11-25 14:55:00'),
-(3, 'Solo miercoles y viernes', 3, '1', '2021-11-27 00:53:21');
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `profile`
@@ -158,43 +134,6 @@ INSERT INTO `profile` (`idprof`, `nombr`, `ruc`, `telef`, `corr`, `direcc`, `des
 
 -- --------------------------------------------------------
 
---
--- Estructura de tabla para la tabla `specialty`
---
-
-CREATE TABLE `specialty` (
-  `codespe` int(11) NOT NULL,
-  `nombrees` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `estado` char(1) COLLATE utf8_unicode_ci NOT NULL,
-  `fecha_create` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `specialty`
---
-
-INSERT INTO `specialty` (`codespe`, `nombrees`, `estado`, `fecha_create`) VALUES
-(1, 'Cirujia', '1', '2021-11-25 14:10:05'),
-(2, 'Cardiologia', '1', '2021-11-25 14:10:07'),
-(3, 'Otorrino', '1', '2021-11-25 13:27:25'),
-(4, 'Pediatría', '1', '2021-11-25 13:54:55'),
-(5, 'Gastroenterología', '1', '2021-11-25 14:10:09'),
-(7, ' Infectología', '1', '2021-11-25 14:10:12'),
-(8, 'Enfermería', '1', '2021-11-25 13:27:31'),
-(9, 'ITS', '1', '2021-11-25 14:10:15'),
-(10, 'Obstetricia', '1', '2021-11-25 13:27:36'),
-(11, 'Odontologia', '1', '2021-11-25 13:55:01'),
-(12, 'Oftalmología', '1', '2021-11-25 14:10:18'),
-(18, 'ejemplo', '1', '2021-11-25 13:42:17'),
-(21, 'ssss', '1', '2021-11-25 14:12:32'),
-(22, 'ffff', '1', '2021-11-25 14:10:20'),
-(23, 'ejemplo de especialidad', '1', '2021-11-27 00:50:41'),
-(24, 'ejempliro', '1', '2021-11-27 00:50:45'),
-(25, 'fdfddf', '1', '2021-11-27 00:50:46'),
-(26, 'especialdiad ejemplo', '1', '2021-11-27 00:52:11'),
-(27, 'espeeeeeeee', '0', '2021-11-27 00:52:58');
-
--- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `usuarios`
@@ -214,7 +153,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `email`, `clave`, `cargo`) VALUES
-(1, 'rubi yadira', 'rubycasi31', 'rubi_casillaas31@hotmail.com', 'b0baee9d279d34fa1dfd71aadb908c3f', '1');
+(1, 'Omar Lopez', 'loma123', 'omarito_lopez123@hotmail.com', 'b0baee9d279d34fa1dfd71aadb908c3f', '1');
 
 --
 -- Índices para tablas volcadas
@@ -225,10 +164,8 @@ INSERT INTO `usuarios` (`id`, `nombre`, `usuario`, `email`, `clave`, `cargo`) VA
 --
 ALTER TABLE `appointment`
   ADD PRIMARY KEY (`codcit`),
-  ADD KEY `codpaci` (`codpaci`,`coddoc`,`codespe`),
-  ADD KEY `coddoc` (`coddoc`),
-  ADD KEY `codespe` (`codespe`),
-  ADD KEY `idhora` (`idhora`);
+  ADD KEY `codpaci` (`codpaci`,`coddoc`),
+  ADD KEY `coddoc` (`coddoc`);
 
 --
 -- Indices de la tabla `customers`
@@ -240,27 +177,13 @@ ALTER TABLE `customers`
 -- Indices de la tabla `doctor`
 --
 ALTER TABLE `doctor`
-  ADD PRIMARY KEY (`coddoc`),
-  ADD KEY `codespe` (`codespe`);
-
---
--- Indices de la tabla `horario`
---
-ALTER TABLE `horario`
-  ADD PRIMARY KEY (`idhora`),
-  ADD KEY `coddoc` (`coddoc`);
+  ADD PRIMARY KEY (`coddoc`);
 
 --
 -- Indices de la tabla `profile`
 --
 ALTER TABLE `profile`
   ADD PRIMARY KEY (`idprof`);
-
---
--- Indices de la tabla `specialty`
---
-ALTER TABLE `specialty`
-  ADD PRIMARY KEY (`codespe`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -274,7 +197,8 @@ ALTER TABLE `usuarios`
 
 --
 -- AUTO_INCREMENT de la tabla `appointment`
---
+-- web
+
 ALTER TABLE `appointment`
   MODIFY `codcit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
@@ -291,22 +215,10 @@ ALTER TABLE `doctor`
   MODIFY `coddoc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla `horario`
---
-ALTER TABLE `horario`
-  MODIFY `idhora` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
 -- AUTO_INCREMENT de la tabla `profile`
 --
 ALTER TABLE `profile`
   MODIFY `idprof` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `specialty`
---
-ALTER TABLE `specialty`
-  MODIFY `codespe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -323,22 +235,7 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `appointment`
   ADD CONSTRAINT `appointment_ibfk_1` FOREIGN KEY (`codpaci`) REFERENCES `customers` (`codpaci`),
-  ADD CONSTRAINT `appointment_ibfk_2` FOREIGN KEY (`coddoc`) REFERENCES `doctor` (`coddoc`),
-  ADD CONSTRAINT `appointment_ibfk_3` FOREIGN KEY (`codespe`) REFERENCES `specialty` (`codespe`),
-  ADD CONSTRAINT `appointment_ibfk_4` FOREIGN KEY (`idhora`) REFERENCES `horario` (`idhora`);
-
---
--- Filtros para la tabla `doctor`
---
-ALTER TABLE `doctor`
-  ADD CONSTRAINT `doctor_ibfk_1` FOREIGN KEY (`codespe`) REFERENCES `specialty` (`codespe`);
-
---
--- Filtros para la tabla `horario`
---
-ALTER TABLE `horario`
-  ADD CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`coddoc`) REFERENCES `doctor` (`coddoc`);
-COMMIT;
+  ADD CONSTRAINT `appointment_ibfk_2` FOREIGN KEY (`coddoc`) REFERENCES `doctor` (`coddoc`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

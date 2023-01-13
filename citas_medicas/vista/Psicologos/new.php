@@ -1,5 +1,5 @@
 <?php
-$opcion = "2";
+$opcion = "3";
 $_GET["opcion"] = $opcion;
 require '../vista/template/header.php';
 ?>
@@ -9,7 +9,7 @@ require '../vista/template/header.php';
             <h2
               class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
             >
-              New Patients
+              New Doctor
             </h2>
             <!-- CTA -->
             <a class="flex items-center justify-between p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple" style="cursor: pointer;">
@@ -32,14 +32,14 @@ require '../vista/template/header.php';
              
               <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">DNI</span>
-                <input maxlength="8" name="dnipa" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" required="" type="text"
+                <input maxlength="8" name="dnidoc" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" required="" type="text"
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                 />
               </label>
 
                <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Nombres</span>
-                <input name="nombrep" type="text"
+                <input name="nomdoc" type="text"
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                  
                 />
@@ -47,48 +47,19 @@ require '../vista/template/header.php';
 
                <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Apellidos</span>
-                <input name="apellidop" type="text"
+                <input name="apedoc" type="text"
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                 />
               </label>
 
-              
-              <div class="mt-4 text-sm">
+              <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
-                  Seguro
+                  Especialidad
                 </span>
-                <div class="mt-2">
-                  <label
-                    class="inline-flex items-center text-gray-600 dark:text-gray-400"
-                  >
-                    <input name="seguro"
-                      type="radio"
-                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                      
-                      value="Si"
-                    />
-                    <span class="ml-2">Si</span>
-                  </label>
-                  <label
-                    class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"
-                  >
-                    <input name="seguro"
-                      type="radio"
-                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                      
-                      value="No"
-                    />
-                    <span class="ml-2">No</span>
-                  </label>
-                </div>
-              </div>
-
-              <label class="block text-sm">
-                <span class="text-gray-700 dark:text-gray-400">Teléfono</span>
-                <input name="tele" maxlength="9" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" required="" type="text"
-                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                <select  name="codespe" id="espe" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                  <option>Selecione especialdiad</option>
                  
-                />
+                </select>
               </label>
 
               <div class="mt-4 text-sm">
@@ -102,7 +73,7 @@ require '../vista/template/header.php';
                     <input name="sexo"
                       type="radio"
                       class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                     
+                      name="sexo"
                       value="Masculino"
                     />
                     <span class="ml-2">Masculino</span>
@@ -113,7 +84,7 @@ require '../vista/template/header.php';
                     <input name="sexo"
                       type="radio"
                       class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                      
+                      name="sexo"
                       value="Femenino"
                     />
                     <span class="ml-2">Femenino</span>
@@ -122,37 +93,40 @@ require '../vista/template/header.php';
               </div>
 
               <label class="block text-sm">
-                <span class="text-gray-700 dark:text-gray-400">Correo</span>
-                <input name="email" type="email"  required=""
-                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                 
-                />
-              </label>
-
-               <label class="block text-sm">
-                <span class="text-gray-700 dark:text-gray-400">Usuario</span>
-                <input name="usuario" type="text"  required=""
+                <span class="text-gray-700 dark:text-gray-400">Teléfono</span>
+                <input name="telefo" maxlength="9" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" required="" type="text"
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                  
                 />
               </label>
 
               <label class="block text-sm">
-                <span class="text-gray-700 dark:text-gray-400">Contraseña</span>
-                <input name="clave" type="password"  required=""
+                <span class="text-gray-700 dark:text-gray-400">Nacimiento</span>
+                <input type="date" name="fechanaci"
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  
+                />
+              </label>
+
+              <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Correo</span>
+                <input name="correo" type="email"  required=""
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                  
                 />
               </label>
 
-              <label class="block text-sm" style="display:none;">
-                <span class="text-gray-700 dark:text-gray-400">cargo</span>
-                <input name="cargo" type="text" value="2"  required=""
-                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+              <label class="block mt-4 text-sm">
+                <span class="text-gray-700 dark:text-gray-400">
+                  Nacionalidad
+                </span>
+                <select  name="naciona"  class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                  <option>Selecione una nacionalidad</option>
+                  <option value="Peruana">Peruana</option>
+                  <option value="Venezolana">Venezolana</option>
                  
-                />
+                </select>
               </label>
-
 
               <label class="block text-sm" style="display:none;">
                 <span class="text-gray-700 dark:text-gray-400">Estado</span>
@@ -204,24 +178,22 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
        die("Connection failed: " . $conn->connect_error);
    } 
-$dnipa=$_POST['dnipa'];
-$nombrep=$_POST['nombrep'];
-$apellidop=$_POST['apellidop'];
-$seguro=$_POST['seguro'];
+$dnidoc=$_POST['dnidoc'];
+$nomdoc=$_POST['nomdoc'];
+$apedoc=$_POST['apedoc'];
+$codespe=$_POST['codespe'];
 
-$tele=$_POST['tele'];
 $sexo=$_POST['sexo'];
+$telefo=$_POST['telefo'];
 
-$email=$_POST['email'];
-$usuario=$_POST['usuario'];
-$clave= MD5($_POST['clave']);
-
-$cargo=$_POST['cargo'];
+$fechanaci=$_POST['fechanaci'];
+$correo=$_POST['correo'];
+$naciona=$_POST['naciona'];
 $estado=$_POST['estado'];
 
 
 // Realizamos la consulta para saber si coincide con uno de esos criterios
-$sql = "select * from customers where dnipa='$dnipa' or email='$email' or tele='$tele'";
+$sql = "select * from doctor where dnidoc='$dnidoc' or correo='$correo' or telefo='$telefo'";
 $result = mysqli_query($conn, $sql);
 ?>
 
@@ -251,7 +223,7 @@ Swal.fire({
  else
  {
 // Si no hay resultados, ingresamos el registro a la base de datos
-$sql2 = "INSERT INTO customers(dnipa,nombrep,apellidop,seguro,tele,sexo,email,usuario,clave,cargo,estado)VALUES ('$dnipa','$nombrep','$apellidop','$seguro','$tele','$sexo','$email','$usuario','$clave','$cargo','$estado')";
+$sql2 = "INSERT INTO doctor(dnidoc,nomdoc,apedoc,codespe,sexo,telefo,fechanaci,correo,naciona,estado)VALUES ('$dnidoc','$nomdoc','$apedoc','$codespe','$sexo','$telefo','$fechanaci','$correo','$naciona','$estado')";
 
 
 if (mysqli_query($conn, $sql2)) {
@@ -259,17 +231,16 @@ if (mysqli_query($conn, $sql2)) {
        if($sql2){
    ?>
 
-        
-
         <script type="text/javascript">
              
 Swal.fire({
-  icon: 'info',
-  title: 'Registro',
-  text: 'Datos registrados correctamente'
-  
+  position: 'top-end',
+  icon: 'success',
+  title: 'Agregado correctamente',
+  showConfirmButton: false,
+  timer: 1500
 }).then(function() {
-            window.location = "../../folder/patients.php";
+            window.location = "../../folder/doctor.php";
         });
         </script>
 
