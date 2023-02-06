@@ -57,6 +57,7 @@ class UserData {
 	}
 	public static function getMedicById($id){
 		$sql = "select * from ".self::$tablename." where id=$id";
+		$sql = "SELECT TM.id FROM user TU inner join medic TM WHERE TU.name = TM.name and TU.lastname = TM.lastname and TU.id = $id";
 		$query = Executor::doit($sql);
 		return Model::one($query[0],new UserData());
 	}

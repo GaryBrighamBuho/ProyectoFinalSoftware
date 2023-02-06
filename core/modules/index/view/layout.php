@@ -63,14 +63,14 @@ f
             <?php endif; ?>
 
             <?php if ($u->tipo == 2) : ?>
-              <li><a href="index.php?view=newreservation"><i class="fa fa-asterisk"></i> Nueva Cita</a></li>
-              <li><a href="index.php?view=home"><i class="fa fa-home"></i> Inicio</a></li>
+              <li><a href="index.php?view=homepacient"><i class="fa fa-home"></i> Inicio</a></li>
               <li><a href="index.php?view=reservationspacient"><i class="fa fa-calendar"></i> Citas</a></li>
               <li><a href="index.php?view=medics"><i class="fa fa-support"></i> Medicos</a></li>
+              <li><a href="index.php?view=newreservation"><i class="fa fa-asterisk"></i> Nueva Cita</a></li>
             <?php endif; ?>
 
             <?php if ($u->tipo == 1) : ?>
-              <li><a href="index.php?view=home"><i class="fa fa-home"></i> Inicio</a></li>
+              <li><a href="index.php?view=homemedic"><i class="fa fa-home"></i> Inicio</a></li>
               <li><a href="index.php?view=reservationsmedic"><i class="fa fa-calendar"></i> Citas</a></li>
               <li><a href="index.php?view=pacients"><i class="fa fa-male"></i> Pacientes</a></li>
             <?php endif; ?>
