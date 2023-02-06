@@ -12,6 +12,7 @@ class ReservationData {
 	public $date_at;
 	public $time_at;
 	public $estado;
+	public $id;
 	
 	public static $tablename = "reservation";
 	
@@ -44,7 +45,7 @@ class ReservationData {
 
 // partiendo de que ya tenemos creado un objecto ReservationData previamente utilizamos el contexto
 	public function update(){
-		$sql = "update ".self::$tablename." set title=\"$this->title\",pacient_id=\"$this->pacient_id\",medic_id=\"$this->medic_id\",date_at=\"$this->date_at\",time_at=\"$this->time_at\",note=\"$this->note\" where id=$this->id";
+		$sql = "update ".self::$tablename." set title=\"$this->title\",pacient_id=\"$this->pacient_id\",medic_id=\"$this->medic_id\",date_at=\"$this->date_at\",time_at=\"$this->time_at\",note=\"$this->note\",estado=\"$this->estado\" where id=$this->id";
 		Executor::doit($sql);
 	}
 

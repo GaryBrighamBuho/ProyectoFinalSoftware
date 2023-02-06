@@ -3,14 +3,25 @@
 include 'core/modules/index/model/ReservationData.php';
 
 
-$r = new ReservationData();
-$r->title = $_POST["title"];
-$r->note = $_POST["note"];
-$r->pacient_id = $_POST["pacient_id"];
-$r->medic_id = $_POST["medic_id"];
-$r->date_at = $_POST["date_at"];
-$r->time_at = $_POST["time_at"];
-$r->add();
+foreach ($_POST as $key => $value) {
+  echo "The value of " . $key . " is: " . $value . "<br>";
+}
+
+$r = ReservationData::getById($_POST["reservation_id"]);
+
+if($r->estado==="0"){
+  $r->note = $_POST["note"];
+  $r->date_at = $_POST["date_at"];
+  $r->time_at = $_POST["time_at"];
+  $r->estado = 1;
+
+  $r->update();
+}
+
+
+print "<script>window.location='index.php?view=pacients';</script>";
+
+
 
 Core::redir("./index.php?view=reservations");
 ?>

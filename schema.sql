@@ -54,7 +54,7 @@ create table reservation(
 	foreign key (pacient_id) references pacient(id),
 	foreign key (medic_id) references medic(id)
 	-- 0 Abierto
-	-- 1 Pendiente
+	-- 1 Confirmado
 	-- 3 Completado
 	-- 4 Cancelado
 );
