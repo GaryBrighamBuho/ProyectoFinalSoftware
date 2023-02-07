@@ -50,13 +50,13 @@ create table reservation(
 	pacient_id int not null,
 	medic_id int not null,
 	estado int not null,
-	check(estado in (0,1,2,3,4)),
+	check(estado in (0,1,2,3)),
 	foreign key (pacient_id) references pacient(id),
 	foreign key (medic_id) references medic(id)
 	-- 0 Abierto
 	-- 1 Confirmado
-	-- 3 Completado
-	-- 4 Cancelado
+	-- 2 Completado
+	-- 3 Cancelado
 );
 
 insert into user (username,password,tipo,created_at) value ("admin",sha1(md5("admin")),0,NOW());

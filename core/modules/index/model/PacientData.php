@@ -9,6 +9,7 @@ class PacientData {
   public $image;
   public $is_public;
   public $created_at;
+  public $id;
 	public static $tablename = "pacient";
 
 	public function PacientData(){

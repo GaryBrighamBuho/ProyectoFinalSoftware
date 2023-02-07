@@ -8,6 +8,7 @@ class UserData {
 	public $created_at;
 	public $tipo;
 	public $email;
+	public $id;
 
 	public static $tablename = "user";
 

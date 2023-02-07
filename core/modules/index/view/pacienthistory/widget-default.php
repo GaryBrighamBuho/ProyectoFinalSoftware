@@ -18,8 +18,9 @@ $pacient = PacientData::getById($_GET["id"]);
 <h4>Paciente: <?php echo $pacient->name." ".$pacient->lastname;?></h4>
 <br>
 		<?php
-		$users = ReservationData::getAllByPacientId($_GET["id"]);
-		if(count($users)>0){
+		$sql = "select * from ".ReservationData::$tablename." where pacient_id=$pacient->id and estado = '2' order by date_at";
+		$reservations = ReservationData::getBySQL($sql);
+		if(count($reservations)>0){
 			// si hay usuarios
 			?>
 			<table class="table table-bordered table-hover">
@@ -30,15 +31,15 @@ $pacient = PacientData::getById($_GET["id"]);
 			<th>Fecha</th>
 			</thead>
 			<?php
-			foreach($users as $user){
-				$pacient  = $user->getPacient();
-				$medic = $user->getMedic();
+			foreach($reservations as $reservation){
+				$pacient  = $reservation->getPacient();
+				$medic = $reservation->getMedic();
 				?>
 				<tr>
-				<td><?php echo $user->title; ?></td>
+				<td><?php echo $reservation->title; ?></td>
 				<td><?php echo $pacient->name." ".$pacient->lastname; ?></td>
 				<td><?php echo $medic->name." ".$pacient->lastname; ?></td>
-				<td><?php echo $user->date_at." ".$user->time_at; ?></td>
+				<td><?php echo $reservation->date_at." ".$reservation->time_at; ?></td>
 				</tr>
 				<?php
 

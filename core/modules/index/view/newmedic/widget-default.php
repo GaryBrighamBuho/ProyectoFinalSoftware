@@ -1,4 +1,13 @@
-
+<?php 
+	$u=null;
+	$u = UserData::getById(Session::getUID());
+	if(Session::getUID()!=""){
+		
+		if($u->tipo!=='0'){
+			print '<script>alert("No esta autorizado para entrar a esta pagina")</script>';
+			print "<script>window.location='index.php?view=home';</script>";
+		}
+  }?>
 
 <div class="row">
 	<div class="col-md-12">

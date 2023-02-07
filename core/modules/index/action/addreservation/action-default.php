@@ -2,11 +2,6 @@
 
 include 'core/modules/index/model/ReservationData.php';
 
-
-foreach ($_POST as $key => $value) {
-  echo "The value of " . $key . " is: " . $value . "<br>";
-}
-
 $r = ReservationData::getById($_POST["reservation_id"]);
 
 if($r->estado==="0"){

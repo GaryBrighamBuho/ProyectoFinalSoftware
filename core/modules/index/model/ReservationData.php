@@ -86,7 +86,7 @@ class ReservationData {
 	}
 
 	public static function getOld(){
-		$sql = "select * from ".self::$tablename." where date(date_at)<date(NOW()) order by date_at";
+		$sql = 'select * from ' . self::$tablename . ' where date_at != "" and date(date_at)<date(NOW()) order by date_at';
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new ReservationData());
 	}

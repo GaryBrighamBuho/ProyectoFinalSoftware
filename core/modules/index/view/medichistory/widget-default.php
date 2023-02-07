@@ -1,7 +1,5 @@
 <?php
-include 'core/modules/index/model/MedicData.php';
-include 'core/modules/index/model/ReservationData.php';
-$pacient = MedicData::getById($_GET["id"]);
+$medic = MedicData::getById($_GET["id"]);
 ?>
 <div class="row">
 	<div class="col-md-12">
@@ -17,12 +15,13 @@ $pacient = MedicData::getById($_GET["id"]);
 -->
 </div>
 		<h1>Historial de Citas del Medico</h1>
-<h4>Medico: <?php echo $pacient->name." ".$pacient->lastname;?></h4>
+<h4>Medico: <?php echo $medic->name." ".$medic->lastname;?></h4>
 
 <br>
 		<?php
-		$users = ReservationData::getAllByMedicId($_GET["id"]);
-		if(count($users)>0){
+		$sql = "select * from ".ReservationData::$tablename." where medic_id=$medic->id and estado = '2' order by date_at";
+		$reservations = ReservationData::getBySQL($sql);
+		if(count($reservations)>0){
 			// si hay usuarios
 			?>
 			<table class="table table-bordered table-hover">
@@ -33,15 +32,15 @@ $pacient = MedicData::getById($_GET["id"]);
 			<th>Fecha</th>
 			</thead>
 			<?php
-			foreach($users as $user){
-				$pacient  = $user->getPacient();
-				$medic = $user->getMedic();
+			foreach($reservations as $reservation){
+				$pacient  = $reservation->getPacient();
+				$medic = $reservation->getMedic();
 				?>
 				<tr>
-				<td><?php echo $user->title; ?></td>
+				<td><?php echo $reservation->title; ?></td>
 				<td><?php echo $pacient->name." ".$pacient->lastname; ?></td>
 				<td><?php echo $medic->name." ".$pacient->lastname; ?></td>
-				<td><?php echo $user->date_at." ".$user->time_at; ?></td>
+				<td><?php echo $reservation->date_at." ".$reservation->time_at; ?></td>
 				</tr>
 				<?php
 

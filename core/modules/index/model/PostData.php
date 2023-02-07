@@ -6,6 +6,7 @@ class PostData {
   public $user_id;
   public $is_public;
   public $created_at;
+	public $id;
 	public static $tablename = "post";
 
 	public function PostData(){

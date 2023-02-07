@@ -38,7 +38,7 @@
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-male"></i></span>
 						<select name="pacient_id" class="form-control">
-							<option value="">PACIENTE</option>
+							<option value="">ALUMNOS</option>
 							<?php foreach ($pacients as $p) : ?>
 								<option value="<?php echo $p->id; ?>" <?php if (isset($_GET["pacient_id"]) && $_GET["pacient_id"] != "") {
 																												echo "selected";
@@ -54,7 +54,7 @@
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-support"></i></span>
 						<select name="medic_id" class="form-control">
-							<option value="">MEDICO</option>
+							<option value="">PSICOLOGOS</option>
 							<?php foreach ($medics as $p) : ?>
 								<option value="<?php echo $p->id; ?>" <?php if (isset($_GET["medic_id"]) && $_GET["medic_id"] != "") {
 																												echo "selected";
@@ -87,7 +87,7 @@
 		if ((isset($_GET["q"]) && isset($_GET["pacient_id"]) && isset($_GET["medic_id"]) && isset($_GET["date_at"])) && ($_GET["q"] != "" || $_GET["pacient_id"] != "" || $_GET["medic_id"] != "" || $_GET["date_at"] != "")) {
 			$sql = "select * from reservation where ";
 			if ($_GET["q"] != "") {
-				$sql .= " title like '%$_GET[q]%' and note like '%$_GET[q] %' ";
+				$sql .= " title like '%$_GET[q]%' or note like '%$_GET[q] %' ";
 			}
 
 			if ($_GET["pacient_id"] != "") {
@@ -117,15 +117,15 @@
 
 			$reservations = ReservationData::getBySQL($sql);
 		} else {
-			// $reservations = ReservationData::getAll();
 			$reservations = ReservationData::getBySQL( "select * from ".ReservationData::$tablename );
 		}
 		if (count($reservations) > 0) {
-			// si hay usuarios
+			// si hay citas
 		?>
 			<table class="table table-bordered table-hover">
 				<thead>
 					<th>Asunto</th>
+					<th>Paciente</th>
 					<th>Medico</th>
 					<th>Fecha</th>
 					<th>Estado</th>
@@ -137,13 +137,16 @@
 				?>
 					<tr>
 						<td><?php echo $reservation->title; ?></td>
+						<td><?php echo $pacient->name . " " . $pacient->lastname; ?></td>
 						<td><?php echo $medic->name . " " . $medic->lastname; ?></td>
+
 						<?php if($reservation->estado!=='0'):?>
 							<td><?php echo $reservation->date_at . " " . $reservation->time_at; ?></td>
 						<?php endif; ?>
 						<?php if($reservation->estado==='0'):?>
 							<td><?php echo "Fecha no definida" ?></td>
 						<?php endif; ?>
+
 						<td style="width:130px;">
 						
 							<?php 
@@ -152,12 +155,16 @@
 							}else if($reservation->estado === '1'){
 								echo "Confirmado";
 							}else if($reservation->estado === '2'){
-								echo "Completado <button>Eva</button>";
+								echo "Completado";
 							}else if($reservation->estado === '3'){
 								echo "Cancelado";
 							}
 							?>
 						</td>
+						<!-- <td style="width:130px;">
+							<a href="index.php?view=editreservation&id=<?php echo $reservation->id; ?>" class="btn btn-warning btn-xs">Editar</a>
+							<a href="index.php?action=delreservation&id=<?php echo $reservation->id; ?>" class="btn btn-danger btn-xs">Eliminar</a>
+						</td> -->
 					</tr>
 			<?php
 

@@ -1,21 +1,13 @@
 <div class="row">
   <div class="col-md-12">
     <div class="btn-group pull-right">
-      <!--<div class="btn-group pull-right">
-  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    <i class="fa fa-download"></i> Descargar <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" role="menu">
-    <li><a href="report/clients-word.php">Word 2007 (.docx)</a></li>
-  </ul>
-</div>
--->
+
     </div>
     <a href="./index.php?view=oldreservations" class="btn btn-default pull-right">Citas Anteriores</a>
     <h1>Citas</h1>
     <br>
     <form class="form-horizontal" role="form">
-      <input type="hidden" name="view" value="reservations">
+      <input type="hidden" name="view" value="reservationsmedic">
       <?php
 
       $pacients = PacientData::getAll();
@@ -33,38 +25,19 @@
         </div>
 
 
-        <?php if (UserData::getById(Session::getUID())->tipo !== "2") : ?>
-          <div class="col-lg-2">
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-male"></i></span>
-              <select name="pacient_id" class="form-control">
-                <option value="">PACIENTE</option>
-                <?php foreach ($pacients as $p) : ?>
-                  <option value="<?php echo $p->id; ?>" <?php if (isset($_GET["pacient_id"]) && $_GET["pacient_id"] != "") {
-                                                          echo "selected";
-                                                        } ?>><?php echo $p->id . " - " . $p->name . " " . $p->lastname; ?></option>
-                <?php endforeach; ?>
-              </select>
-            </div>
+        <div class="col-lg-2">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-male"></i></span>
+            <select name="pacient_id" class="form-control">
+              <option value="">PACIENTE</option>
+              <?php foreach ($pacients as $p) : ?>
+                <option value="<?php echo $p->id; ?>" <?php if (isset($_GET["pacient_id"]) && $_GET["pacient_id"] != "") {
+                                                        echo "selected";
+                                                      } ?>><?php echo $p->id . " - " . $p->name . " " . $p->lastname; ?></option>
+              <?php endforeach; ?>
+            </select>
           </div>
-        <?php endif; ?>
-
-        <?php if (UserData::getById(Session::getUID())->tipo !== "1") : ?>
-          <div class="col-lg-2">
-            <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-support"></i></span>
-              <select name="medic_id" class="form-control">
-                <option value="">MEDICO</option>
-                <?php foreach ($medics as $p) : ?>
-                  <option value="<?php echo $p->id; ?>" <?php if (isset($_GET["medic_id"]) && $_GET["medic_id"] != "") {
-                                                          echo "selected";
-                                                        } ?>><?php echo $p->id . " - " . $p->name . " " . $p->lastname; ?></option>
-                <?php endforeach; ?>
-              </select>
-            </div>
-          </div>
-        <?php endif; ?>
-
+        </div>
 
         <div class="col-lg-4">
           <div class="input-group">
@@ -83,42 +56,24 @@
     </form>
 
     <?php
+    $sql = "no hay sql";
     $reservations = array();
-    if ((isset($_GET["q"]) && isset($_GET["pacient_id"]) && isset($_GET["medic_id"]) && isset($_GET["date_at"])) && ($_GET["q"] != "" || $_GET["pacient_id"] != "" || $_GET["medic_id"] != "" || $_GET["date_at"] != "")) {
-      $sql = "select * from reservation where ";
+    if ((isset($_GET["q"]) && isset($_GET["pacient_id"]) && isset($_GET["date_at"])) && ($_GET["q"] != "" || $_GET["pacient_id"] != "" || $_GET["date_at"] != "")) {
+      $sql = "select * from reservation where medic_id=" . UserData::getMedicById(Session::getUID())->id;
+
       if ($_GET["q"] != "") {
-        $sql .= " title like '%$_GET[q]%' and note like '%$_GET[q] %' ";
+        $sql .= " and title like '%$_GET[q]%' or note like '%$_GET[q] %' ";
       }
 
       if ($_GET["pacient_id"] != "") {
-        if ($_GET["q"] != "") {
-          $sql .= " and ";
-        }
-        $sql .= " pacient_id = " . $_GET["pacient_id"];
+        $sql .= " and pacient_id = " . $_GET["pacient_id"];
       }
-
-      if ($_GET["medic_id"] != "") {
-        if ($_GET["q"] != "" || $_GET["pacient_id"] != "") {
-          $sql .= " and ";
-        }
-
-        $sql .= " medic_id = " . $_GET["medic_id"];
-      }
-
-
-
       if ($_GET["date_at"] != "") {
-        if ($_GET["q"] != "" || $_GET["pacient_id"] != "" || $_GET["medic_id"] != "") {
-          $sql .= " and ";
-        }
-
-        $sql .= " date_at = \"" . $_GET["date_at"] . "\"";
+        $sql .= " and date_at = \"" . $_GET["date_at"] . "\"";
       }
-
       $reservations = ReservationData::getBySQL($sql);
     } else {
-      // $reservations = ReservationData::getAll();
-      $reservations = ReservationData::getBySQL("select * from " . ReservationData::$tablename);
+      $reservations = ReservationData::getBySQL("select * from " . ReservationData::$tablename . " where medic_id=" . UserData::getMedicById(Session::getUID())->id);
     }
     if (count($reservations) > 0) {
       // si hay usuarios
@@ -129,6 +84,7 @@
           <th>Paciente</th>
           <th>Fecha</th>
           <th>Estado</th>
+          <th>Acciones</th>
         </thead>
         <?php
         foreach ($reservations as $reservation) {
@@ -145,19 +101,32 @@
               <td><?php echo "Fecha no definida" ?></td>
             <?php endif; ?>
             <td style="width:130px;">
-
               <?php
               if ($reservation->estado === '0') {
                 echo "Publicado";
               } else if ($reservation->estado === '1') {
                 echo "Confirmado";
               } else if ($reservation->estado === '2') {
-                echo "Completado <button>Eva</button>";
+                echo "Completado";
               } else if ($reservation->estado === '3') {
                 echo "Cancelado";
               }
               ?>
             </td>
+            <?php if($reservation->estado==='1'):?>
+            <td style="width:180px;">
+              <form action="./?action=completereservation" method='POST' style='display:inline;'>
+                <input type='hidden' name='reservation_id'  value=<?php echo "'".$reservation->id."'" ?>></input>
+                <button type='submit' class="btn-primary">Completar</button>
+              </form>
+              <form action="./?action=cancelreservation" method='POST' style='display:inline;'>
+                <input type='hidden' name='reservation_id'  value=<?php echo "'".$reservation->id."'" ?>></input>
+                <button type='submit' class="btn-primary">Cancelar</button>
+              </form>
+            </td>
+            <?php else: ?>
+            <td></td>
+            <?php endif; ?>
           </tr>
       <?php
 

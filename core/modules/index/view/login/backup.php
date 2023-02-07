@@ -1,12 +1,12 @@
 <?php
-
+//Inicio de Sesion
 if (Session::getUID() != "") {
     print "<script>window.location='index.php?view=home';</script>";
 }
 
 ?>
 <br><br><br><br><br>
-<div style="background-color: #7b1523; margin-right: 300px; padding: 50px; border-radius: 20px">
+<div style="background-color: #7b1523">
     	<div style="display: flex; justify-content: center">
     	<?php if (isset($_COOKIE['password_updated'])): ?>
     		<div class="alert alert-success">
@@ -16,12 +16,14 @@ if (Session::getUID() != "") {
     		</div>
     	<?php setcookie("password_updated", "", time() - 18600);
 endif;?>
+<!-- cargamos imagen -->
 <img
           width="300"
           height="450"
           src="http://www.unsaac.edu.pe/images/imagenes/escudo.png"
           style="border-radius: 20px 0px 0px 20px"
         />
+        <!-- diseño del recuadro -->
     		<div  style="
             background-color: #f7f7f7;
             display: flex;
@@ -40,6 +42,7 @@ endif;?>
               ">Iniciar Sesión</h3>
 			 	</div>
 			  	<div>
+            <!-- formulario para ingresar datos de inicio de sesion -->
 			    	<form accept-charset="UTF-8" role="form" method="post" action="index.php?view=processlogin" style="border: none">
                     <fieldset style="
                   border: none;
@@ -66,7 +69,8 @@ endif;?>
                       background: transparent;
                       transition: border-color 0.2s;
                     " placeholder="Usuario" name="mail" type="text"/>
-							<label
+							<!-- ingresa el usuario -->
+              <label
                     for="email"
                     style="
                       position: absolute;
@@ -97,11 +101,12 @@ endif;?>
                       background: transparent;
                       transition: border-color 0.2s;
                     "
-                    placeholder="*"
+                    placeholder="***"
                     name="password"
                     type="password"
                     value=""
                     id="pass" />
+          <!-- Ingresa la contraseña           -->
 					<label
                     for="pass"
                     style="
@@ -115,6 +120,7 @@ endif;?>
                     >Contraseña:</label
                   >
 			    		</div>
+              <!-- Boton de acceder -->
 			    		<input  style="
                     border: none;
                     padding: 10px;
