@@ -1,8 +1,6 @@
 <?php
 
-// define('LBROOT',getcwd()); // LegoBox Root ... the server root
-// include("core/controller/Database.php");
-
+//validacion de que la cuenta exista en la base de datos
 if(Session::getUID()=="") {
 	$user = $_POST['mail'];
 	$pass = sha1(md5($_POST['password']));
@@ -20,6 +18,7 @@ if(Session::getUID()=="") {
 	}
 
 	if($found==true) {
+		//inicio de sesion
 		session_start();
 	
 		$_SESSION['user_id']= $userid ;

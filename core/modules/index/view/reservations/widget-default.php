@@ -17,7 +17,7 @@
 		<form class="form-horizontal" role="form">
 			<input type="hidden" name="view" value="reservations">
 			<?php
-
+			//recuperar datos del paciente y del medico
 			$pacients = PacientData::getAll();
 			$medics = MedicData::getAll();
 			?>
@@ -32,7 +32,7 @@
 					</div>
 				</div>
 
-
+				//recuperar datos de los alumnos de los psicologos
 				<?php if(UserData::getById(Session::getUID())->tipo!=="2"): ?>																											
 				<div class="col-lg-2">
 					<div class="input-group">
@@ -48,7 +48,7 @@
 					</div>
 				</div>
 				<?php endif; ?>
-
+		//recuperar datos de los psicologos de los alumnos
         <?php if(UserData::getById(Session::getUID())->tipo!=="1"): ?>																											
 				<div class="col-lg-2">
 					<div class="input-group">
@@ -65,7 +65,7 @@
 				</div>
 				<?php endif; ?>
 
-
+			    //recupera las fechas en las que hay reserva
 				<div class="col-lg-4">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -74,7 +74,7 @@
 																											} ?>" class="form-control" placeholder="Palabra clave">
 					</div>
 				</div>
-
+                //boton de busqueda
 				<div class="col-lg-2">
 					<button class="btn btn-primary btn-block">Buscar</button>
 				</div>
@@ -83,6 +83,7 @@
 		</form>
 
 		<?php
+		//recuperar datos de la busqueda
 		$reservations = array();
 		if ((isset($_GET["q"]) && isset($_GET["pacient_id"]) && isset($_GET["medic_id"]) && isset($_GET["date_at"])) && ($_GET["q"] != "" || $_GET["pacient_id"] != "" || $_GET["medic_id"] != "" || $_GET["date_at"] != "")) {
 			$sql = "select * from reservation where ";
@@ -123,8 +124,10 @@
 		if (count($reservations) > 0) {
 			// si hay usuarios
 		?>
+			// tabla de datos de las citas
 			<table class="table table-bordered table-hover">
 				<thead>
+					//columnas de la tabla
 					<th>Asunto</th>
 					<th>Medico</th>
 					<th>Fecha</th>
@@ -136,6 +139,7 @@
 					$medic = $reservation->getMedic();
 				?>
 					<tr>
+						//recuperar datos de citas para su respectiva columna
 						<td><?php echo $reservation->title; ?></td>
 						<td><?php echo $medic->name . " " . $medic->lastname; ?></td>
 						<?php if($reservation->estado!=='0'):?>
@@ -146,7 +150,8 @@
 						<?php endif; ?>
 						<td style="width:130px;">
 						
-							<?php 
+							<?php
+							//mostrar estado de la cita 
 							if($reservation->estado === '0'){
 								echo "Publicado";
 							}else if($reservation->estado === '1'){
@@ -163,12 +168,9 @@
 
 				}
 			} else {
+				//alerta de que no hay pacientes
 				echo "<p class='alert alert-danger'>No hay pacientes</p>";
 			}
-
-
 			?>
-
-
 	</div>
 </div>

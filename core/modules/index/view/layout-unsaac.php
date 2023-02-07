@@ -8,10 +8,10 @@
 
     <title>.: Atención Psicológica :.</title>
 
-    <!-- Bootstrap core CSS -->
+    <!-- agregar Bootstrap para el CSS -->
     <link href="res/bootstrap3/css/bootstrap.css" rel="stylesheet">
 
-    <!-- Add custom CSS here -->
+    <!-- Agregue CSS personalizado aquí -->
     <link href="css/sb-admin.css" rel="stylesheet">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <script src="js/jquery-1.10.2.js"></script>
@@ -24,7 +24,6 @@
 
       <!-- Sidebar -->
       <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -35,7 +34,7 @@
           <a class="navbar-brand" href="./">Atención Psicológica <sup><small><span class="label label-info">v1.0</span></small></sup> </a>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Recopila los enlaces de navegación, formularios y otros contenidos para alternar -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
 <?php
 include 'core/modules/index/model/UserData.php';
