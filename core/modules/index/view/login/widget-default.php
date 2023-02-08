@@ -1,5 +1,5 @@
 <?php
-//Inicio de Sesion
+
 if (Session::getUID() != "") {
     print "<script>window.location='index.php?view=home';</script>";
 }
@@ -16,14 +16,12 @@ if (Session::getUID() != "") {
     		</div>
     	<?php setcookie("password_updated", "", time() - 18600);
 endif;?>
-//cargamos imagen
 <img
           width="300"
           height="450"
           src="http://www.unsaac.edu.pe/images/imagenes/escudo.png"
           style="border-radius: 20px 0px 0px 20px"
         />
-        //diseño del recuadro
     		<div  style="
             background-color: #f7f7f7;
             display: flex;
@@ -42,7 +40,6 @@ endif;?>
               ">Iniciar Sesión</h3>
 			 	</div>
 			  	<div>
-            //formulario para ingresar datos de inicio de sesion
 			    	<form accept-charset="UTF-8" role="form" method="post" action="index.php?view=processlogin" style="border: none">
                     <fieldset style="
                   border: none;
@@ -69,8 +66,7 @@ endif;?>
                       background: transparent;
                       transition: border-color 0.2s;
                     " placeholder="Usuario" name="mail" type="text"/>
-							//ingresa el usuario
-              <label
+							<label
                     for="email"
                     style="
                       position: absolute;
@@ -106,7 +102,6 @@ endif;?>
                     type="password"
                     value=""
                     id="pass" />
-          //Ingresa la contraseña          
 					<label
                     for="pass"
                     style="
@@ -120,7 +115,6 @@ endif;?>
                     >Contraseña:</label
                   >
 			    		</div>
-              //Boton de acceder
 			    		<input  style="
                     border: none;
                     padding: 10px;
